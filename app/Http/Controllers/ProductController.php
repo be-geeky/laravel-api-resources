@@ -7,6 +7,13 @@ use App\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller {
+
+	public function __construct() {
+		// $this->middleware('guest', ['except' => [
+		// 	'create', 'store', 'destroy',
+		// ]]);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
