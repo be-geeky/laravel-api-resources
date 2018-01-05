@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller {
 
-	public function __construct() {
-		// $this->middleware('guest', ['except' => [
-		// 	'create', 'store', 'destroy',
-		// ]]);
-	}
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -22,7 +16,6 @@ class ProductController extends Controller {
 	public function index() {
 		//Get Products
 		$products = Product::paginate(15);
-
 		//Return collection of Products as a resourse
 		return new ProductResourceCollection($products);
 	}
@@ -44,7 +37,6 @@ class ProductController extends Controller {
 	 */
 	public function store(Request $request) {
 		$product = $request->isMethod('put') ? Product::findOrFail($request->product_id) : new Product;
-
 		$product->id = $request->input('product_id');
 		$product->name = $request->input('name');
 		$product->price = $request->input('price');
@@ -61,6 +53,8 @@ class ProductController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show($id) {
+		ProductResource::withoutWrapping();
+		//if added in App\Providers\AppServiceProvider::boot(), it will apply globally
 		return new ProductResource(Product::find($id));
 	}
 

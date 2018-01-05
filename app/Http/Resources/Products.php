@@ -12,7 +12,12 @@ class Products extends ResourceCollection {
 	 * @return array
 	 */
 	public function toArray($request) {
-		return parent::toArray($request);
+		return [
+			'data' => $this->collection,
+			'links' => [
+				'self' => 'link-value',
+			],
+		];
 	}
 	public function with($request) {
 		return [

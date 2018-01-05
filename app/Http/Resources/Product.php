@@ -2,30 +2,32 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Categories as CategoriesCollection;
 use Illuminate\Http\Resources\Json\Resource;
 
 class Product extends Resource {
 	/**
-	 * Transform the resource into an array.
+	 * Transform the resource into an array (a JSON:API resource).
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return array
 	 */
 	public function toArray($request) {
 		return [
-			'id' => $this->id,
-			'name' => $this->name,
-			'price' => $this->price,
-			// 'created_at' => $this->created_at,
-			// 'updated_at' => $this->updated_at,
+			'type' => 'products',
+			'id' => (string) $this->id,
+			'attributes' => [
+				'name' => $this->name,
+				'price' => $this->price,
+			],
+			'relationships' => new CategoriesCollection($this->categories),
 		];
-		//return parent::toArray($request);
 	}
 
-	public function with($request) {
-		return [
-			'version' => '1.0',
-			'url' => url('http://example.com'),
-		];
-	}
+	// public function with($request) {
+	// 	return [
+	// 		'version' => '1.0',
+	// 		'url' => url('http://example.com'),
+	// 	];
+	// }
 }
